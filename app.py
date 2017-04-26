@@ -20,12 +20,19 @@ PORT = 21337
 
 api = Api(app)
 
+def kill_proc(p):
+    poll = p.poll()
+    if poll is None:
+        p.terminate()
+
 def evaluate_user_code(user_code):
     user_code_file = open('submission.py', 'w')
     user_code_file.write(user_code)
     user_code_file.close()
     start_time = time.time()
     user_run_process = Popen(['python', 'submission.py'], stderr=PIPE)
+    timer = Timer(config["runtime"], kill_proc, [user_run_process])
+    timer.start() # if forced to kill process, method timed out
     user_error = user_run_process.communicate()[1]
     if str.encode('Error') in user_error:
         return None
@@ -116,4 +123,4 @@ db.create_all(app=app)
 
 if __name__ == '__main__':
     logging.basicConfig(level="INFO")
-    app.run(host='0.0.0.0', port=PORT, debug=True)
+    app.run(host='0.0.0.0', port=PORT, debug=True, threaded=True)
