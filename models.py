@@ -6,8 +6,9 @@ class Task(db.Model):
     __tablename__ = 'tasks'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), unique=True)
-    desc_link = db.Column(db.String(50))
-    test_link = db.Column(db.String(50))
+    desc_link = db.Column(db.String(90))
+    test_link = db.Column(db.String(90))
+    answer_link = db.Column(db.String(90))
     created_at = db.Column(db.DateTime, default=datetime.now, nullable=False)
     answers = db.relationship('Answer', backref='task', lazy='dynamic')
 
@@ -17,6 +18,7 @@ class Task(db.Model):
             'name': self.name,
             'desc_link': self.desc_link,
             'test_link': self.test_link,
+            'answer_link': self.answer_link,
             'created_at': self.created_at,
             'answers': self.answers.count()
         }
@@ -27,7 +29,7 @@ class Answer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(100))
     length = db.Column(db.Integer)
-    runtime = db.Column(db.Float)
+    correct = db.Column(db.Boolean)
     task_id = db.Column(db.Integer, db.ForeignKey('tasks.id'))
     created_at = db.Column(db.DateTime, default=datetime.now, nullable=False)
 
@@ -36,7 +38,7 @@ class Answer(db.Model):
             'id': self.id,
             'username': self.username,
             'length': self.length,
-            'runtime': self.runtime,
+            'correct': self.correct,
             'task_id': self.task_id,
             'created_at': self.created_at
         }
