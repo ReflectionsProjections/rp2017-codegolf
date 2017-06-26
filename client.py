@@ -8,10 +8,10 @@ import requests
 from datetime import datetime
 from requests.exceptions import ConnectionError
 
-from verify import python_verify
+from verify import python_verify, js_verify
 
 HOST = 'http://localhost:21337'
-SUPPORTED_TYPES = {'py':python_verify}
+SUPPORTED_TYPES = {'py':python_verify, 'js':js_verify}
 
 def request(task_id):
     try:
