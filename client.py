@@ -11,7 +11,7 @@ from requests.exceptions import ConnectionError
 from verify import python_verify, js_verify
 
 HOST = 'http://localhost:21337'
-SUPPORTED_TYPES = {'py':python_verify, 'js':js_verify}
+SUPPORTED_TYPES = {'py':python_verify, 'js':js_verify, 'C':cpp_verify, 'cc':cpp_verify}
 
 def request(task_id):
     try:

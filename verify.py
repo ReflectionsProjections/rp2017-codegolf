@@ -14,8 +14,8 @@ def python_verify(data, user_file):
         sys.exit(1) # terminate program TODO: find a better way of doing this
     with open('test.py', 'w') as temp:
         temp.write(test)
-    import test
-    test_result = test.test(data)
+    proc = sp.Popen(['python', 'test.py'], stdin=sp.PIPE, stdout=sp.PIPE)
+    (test_result, err) = proc.communicate(input=data.encode('utf-8'))
     # dispose of temporary files
     os.remove('answer.py')
     os.remove('test.py')
@@ -34,11 +34,11 @@ def js_verify(data, user_file):
         sys.exit(1) # terminate program TODO: find a better way of doing this
     with open('test.js', 'w') as temp:
         temp.write(test)
-    proc = sp.Popen(['node', 'test.js'], stdout=sp.PIPE)
-    (test_result, err) = proc.communicate()
+    proc = sp.Popen(['node', 'test.js'], stdin=sp.PIPE, stdout=sp.PIPE)
+    (test_result, err) = proc.communicate(input=data.encode('utf-8'))
     # dispose of temporary files
-    os.remove('answer.py')
-    os.remove('test.py')
+    os.remove('answer.js')
+    os.remove('test.js')
     
     return test_result
 
