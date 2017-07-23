@@ -8,7 +8,7 @@ import requests
 from datetime import datetime
 from requests.exceptions import ConnectionError
 
-from verify import python_verify, js_verify
+from verify import python_verify, js_verify, cpp_verify
 
 HOST = 'http://localhost:21337'
 SUPPORTED_TYPES = {'py':python_verify, 'js':js_verify, 'C':cpp_verify, 'cc':cpp_verify}
@@ -49,16 +49,14 @@ def task_list():
 def submit(task_id, user_file):
     try:
         ext = user_file.split('.')[-1]
-        if ext not in SUPPORTED_TYPES:
-            print('This language is not supported for this competition.')
-            sys.exit(1)
         user_file_length = len(open(user_file).read())
         submit_date = datetime.now()
         # compute a hash of the current date and time
         # use as argument to verify scripts
         time_hash = hexdigest(submit_date.isoformat())
         # run build/test scripts and get plaintext response
-        verify_result = str(SUPPORTED_TYPES[ext](time_hash, user_file))
+        # throws KeyError if unsupported file extension
+        verify_result = str(SUPPORTED_TYPES[ext](time_hash+b'\n', user_file))
         verify_hash = str(hexdigest(verify_result))
         params = {
             'answer': verify_hash, 
@@ -73,8 +71,12 @@ def submit(task_id, user_file):
             print('You are now in %s place for this task.' % "TODO: Implement leaderboard")
         except ValueError: # server returned a 400 error for non-existent task
             print('The requested task is either closed to entries or does not exist.')
+    except ConnectionError:
+        print('Failed to establish a connection to the server.\nPlease check your Internet connection.')
     except IOError:
         print('The file %s is either\nan invalid script or could not be opened.' % user_file)
+    except KeyError:
+        print('This language is not supported for this competition.')
 
 def hexdigest(string):
     hashobj = hashlib.sha256()
@@ -82,6 +84,8 @@ def hexdigest(string):
     return hashobj.digest()
 
 if __name__=='__main__':
+    #assert python3
+    assert sys.version_info[0] == 3
     print('\n#--------------------------------#')
     print('#           Code Golf            #')
     print('#   Reflections | Projections    #')

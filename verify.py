@@ -15,7 +15,7 @@ def python_verify(data, user_file):
         print("A task folder could not be found. Request a task\nusing python client.py request <task_id>")
         sys.exit(1) # terminate program TODO: find a better way of doing this
     proc = sp.Popen(['python', 'test.py'], stdin=sp.PIPE, stdout=sp.PIPE)
-    test_result, _ = proc.communicate(input=data.encode('utf-8'))
+    test_result, _ = proc.communicate(input=data)
     # dispose of temporary files
     os.remove('answer.py')
     os.remove('test.py')
@@ -35,7 +35,7 @@ def js_verify(data, user_file):
     with open('test.js', 'w') as temp:
         temp.write(test)
     proc = sp.Popen(['node', 'test.js'], stdin=sp.PIPE, stdout=sp.PIPE)
-    test_result, _ = proc.communicate(input=data.encode('utf-8'))
+    test_result, _ = proc.communicate(input=data)
     # dispose of temporary files
     os.remove('answer.js')
     os.remove('test.js')
@@ -60,7 +60,7 @@ def cpp_verify(data, user_file):
         print("Answer failed to compile.")
         sys.exit(1)
     proc = sp.Popen(['./test'], stdin=sp.PIPE, stdout=sp.PIPE)
-    test_result, _ = proc.communicate(input=data.encode('utf-8'))
+    test_result, _ = proc.communicate(input=data)
     # dispose of temporary files
     os.remove('answer.cpp')
     os.remove('test.h')
