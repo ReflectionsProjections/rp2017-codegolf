@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Flask, jsonify, make_response
+from flask import Flask, jsonify, make_response, render_template
 import flask
 import json
 import os
@@ -20,6 +20,8 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 PORT = 21337
 
 api = Api(app)
+
+# REST API Endpoints
 
 class AnswerResource(Resource):
     def post(self, task_id):
@@ -112,6 +114,7 @@ class TaskListResource(Resource):
         '''Endpoint for getting a list of all available tasks'''
         tasks = [task.to_dict() for task in Task.query.all()]
         return jsonify(tasks)
+
 
 # hashing function, returns bytes
 def hexdigest(string):
