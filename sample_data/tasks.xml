@@ -1,0 +1,38 @@
+<data>
+    <task>
+        <name>Triangle Numbers</name>
+        <desc>Given an int N, return the Nth triangle number</desc>
+        <test_cases>
+            <test_case>
+                <input>
+                    <arg>1</arg>
+                </input>
+                <output>1</output>
+            </test_case>
+            <test_case>
+                <input>
+                    <arg>4</arg>
+                </input>
+                <output>10</output>
+            </test_case>
+        </test_cases>
+    </task>
+    <task>
+        <name>Perfect Numbers</name>
+        <desc>Given an int N, return whether N is a perfect number</desc>
+        <test_cases>
+            <test_case>
+                <input>
+                    <arg>6</arg>
+                </input>
+                <output>true</output>
+            </test_case>
+            <test_case>
+                <input>
+                    <arg>7</arg>
+                </input>
+                <output>false</output>
+            </test_case>
+        </test_cases>
+    </task>
+</data>

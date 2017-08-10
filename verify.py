@@ -1,5 +1,4 @@
-import os
-import sys
+import os, sys
 import subprocess as sp
 
 def python_verify(data, user_file):
@@ -7,12 +6,13 @@ def python_verify(data, user_file):
     # write to temporary files
     with open('answer.py', 'w') as temp:
         temp.write(answer)
+
     try:
         test = open('task/test.py').read()
         with open('test.py', 'w') as temp:
             temp.write(test)
     except IOError: # user has not requested task yet
-        print("A task folder could not be found. Request a task\nusing python client.py request <task_id>")
+        print("A task folder could not be found. Request a task using python client.py request <task_id>")
         sys.exit(1) # terminate program TODO: find a better way of doing this
     proc = sp.Popen(['python', 'test.py'], stdin=sp.PIPE, stdout=sp.PIPE)
     test_result, _ = proc.communicate(input=data)

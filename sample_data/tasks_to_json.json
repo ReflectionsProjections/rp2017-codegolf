@@ -1,0 +1,46 @@
+{
+    "data": {
+        "task": [
+            {
+                "name": "Triangle Numbers",
+                "desc": "Given an int N, return the Nth triangle number",
+                "test_cases": {
+                    "test_case": [
+                        {
+                            "input": {
+                                "arg": "1"
+                            },
+                            "output": "1"
+                        },
+                        {
+                            "input": {
+                                "arg": "4"
+                            },
+                            "output": "10"
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Perfect Numbers",
+                "desc": "Given an int N, return whether N is a perfect number",
+                "test_cases": {
+                    "test_case": [
+                        {
+                            "input": {
+                                "arg": "6"
+                            },
+                            "output": "true"
+                        },
+                        {
+                            "input": {
+                                "arg": "7"
+                            },
+                            "output": "false"
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

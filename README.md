@@ -6,15 +6,15 @@ Clone repository with
 ```git clone https://github.com/ReflectionsProjections/rp2017-codegolf```
 
 Navigate to main directory and install dependencies with
-```pip install -r requirements.txt```
+```pip3 install -r requirements.txt```
 
 Install and set up Docker for your system [link](https://docs.docker.com/engine/installation/#supported-platforms)
 
 
 ## Running
 Deploy using Python
-```python app.py```
+```python3 app.py```
 
-Open using web browser on localhost (default port 21337)
+Open using web browser on 0.0.0.0:21337
 
-*wip* will update after refactor
+__README IS STILL A WIP__

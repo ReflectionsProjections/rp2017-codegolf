@@ -12,6 +12,6 @@ characters used in your solution, and the relative order of answers submitted. A
 within their own language, and a live leaderboard will be made available online. 
 
 ##How to participate
-1. Download client.py and get list of tasks with `python client.py list`
-2. Request a task with `python client.py request <task_id>`
-3. Submit an attempt with `python client.py submit <submission_name>`
+1. Download client.py and get list of tasks with `python3 client.py list`
+2. Request a task with `python3 client.py request <task_id>`
+3. Submit an attempt with `python3 client.py submit <submission_name>`

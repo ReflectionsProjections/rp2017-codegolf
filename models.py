@@ -12,7 +12,7 @@ class Answer(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.now, nullable=False)
 
     def to_dict(self):
-        answer_dict = {
+        return {
             'id': self.id,
             'username': self.username,
             'length': self.length,
@@ -20,4 +20,3 @@ class Answer(db.Model):
             'task_id': self.task_id,
             'created_at': self.created_at
         }
-        return answer_dict

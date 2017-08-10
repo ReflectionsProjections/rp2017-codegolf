@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-# @warut-vijit
 
-import hashlib
-import sys
+import hashlib, sys, requests
 import subprocess as sp
-import requests
 from datetime import datetime
 from requests.exceptions import ConnectionError
-
 from verify import python_verify, js_verify, cpp_verify
 
 HOST = 'http://localhost:21337'
-SUPPORTED_TYPES = {'py':python_verify, 'js':js_verify, 'C':cpp_verify, 'cc':cpp_verify}
+SUPPORTED_TYPES = {
+    'py':python_verify,
+    'js':js_verify,
+    'C':cpp_verify,
+    'cc':cpp_verify,
+}
 
 def request(task_id):
     try:
@@ -37,7 +38,7 @@ def task_list():
     try:
         tasks = requests.get(HOST + '/golf/task_list').json()
         if len(tasks) == 0:
-            print('No tasks are currently active.\nMore tasks will be activated shortly.')
+            print('No tasks are currently active. More tasks will be activated shortly.')
         for task in tasks:
             print(' %s:  %s' % (task['id'], task['name']))
     except ConnectionError:
@@ -74,7 +75,7 @@ def submit(task_id, user_file):
     except ConnectionError:
         print('Failed to establish a connection to the server.\nPlease check your Internet connection.')
     except IOError:
-        print('The file %s is either\nan invalid script or could not be opened.' % user_file)
+        print('The file %s is either an invalid script or could not be opened.' % user_file)
     except KeyError:
         print('This language is not supported for this competition.')
 
@@ -84,7 +85,6 @@ def hexdigest(string):
     return hashobj.digest()
 
 if __name__=='__main__':
-    #assert python3
     assert sys.version_info[0] == 3
     print('\n#--------------------------------#')
     print('#           Code Golf            #')
