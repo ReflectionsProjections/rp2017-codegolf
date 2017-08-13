@@ -20,14 +20,15 @@ SUPPORTED_LANGUAGES = ['py', 'cc', 'js', 'java']
 def docker_verify(answer, language, cases):
     sp = Popen('docker-machine status', stdout=PIPE)
     stdout, _ = sp.communicate()
-    if sp.poll() or stdout != 'Running':
+    if sp.poll() or stdout != b'Running\n':
         raise RuntimeError('docker environment is not operational')
     if language not in SUPPORTED_LANGUAGES:
         logging.error('this language is not supported')
         return None
 
     sp = Popen('docker run -id code-golf-sandbox bash', stdout=PIPE)
-    cid, _ = sp.communicate()
+    cid_bytes, _ = sp.communicate()
+    cid = cid_bytes.decode()[:-1]
     if sp.poll():
         raise RuntimeError('verify_%s.sh failed' % language)
     if language == 'py': return __py_verify(cid, answer, cases)
@@ -38,11 +39,16 @@ def docker_verify(answer, language, cases):
 
 def __py_verify(cid, answer, cases):
     results = [False] * len(cases)
-    call('docker cp %s %s:/data/answer.py' % (answer, cid))
+    with open('answer.py', 'w') as tempfile:
+        tempfile.write(answer.decode())
+    call('docker cp answer.py %s:/data/answer.py' % cid)
+    call('rm answer.py')
     for i in range(len(cases)):
-        args = ' '.join(case['args'])
-        sp = Popen('docker exec -i python answer.py %s' % args, stdout=PIPE)
-        results[i] = (sp.communicate()[0] == case['output'])
+        args = ' '.join(cases[i].get('input', None))
+        sp = Popen('docker exec -i %s python /data/answer.py %s' % (cid, args), stdout=PIPE)
+        res_bytes, _ = sp.communicate()
+        res = res_bytes.decode()[:-1]
+        results[i] = (res == cases[i].get('output', None)) 
     call('docker kill %s' % cid)
     return results
 
