@@ -24,6 +24,6 @@ db.init_app(app)
 db.create_all(app=app)
 
 if __name__ == '__main__':
-    manager = TaskManager('sample_data/tasks.xml')
+    rest_api.manager = TaskManager('sample_data/tasks_to_json.json')
     logging.basicConfig(level="INFO")
     app.run(host='0.0.0.0', port=PORT, debug=True, threaded=True)

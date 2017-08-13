@@ -68,4 +68,5 @@ class TaskInfoResource(Resource):
 class TaskListResource(Resource):
     def get(self):
         '''Endpoint for getting a list of all available tasks'''
+        logging.error(manager)
         return jsonify(manager.get_tasks())
