@@ -104,7 +104,7 @@ class TaskManager:
             If tid is NOT found.
         '''
         task_lists = self.get_tasks()
-        if(task_lists is None or tid > len(task_lists)):
+        if(task_lists is None or tid >= len(task_lists)):
             return None
 
         return task_lists[tid]
