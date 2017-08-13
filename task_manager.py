@@ -1,5 +1,6 @@
 from pathlib import Path
 import json
+import logging
 
 class TaskManager:
 
@@ -43,6 +44,7 @@ class TaskManager:
             except:
                 raise json.decoder.JSONDecodeError('The data does not seem to be valid JSON')
         self.path = path
+        logging.info(self.data)
 
 
     def get_raw_json(self):
@@ -102,12 +104,10 @@ class TaskManager:
             If tid is NOT found.
         '''
         task_lists = self.get_tasks()
-        if(task_lists is None):
+        if(task_lists is None or tid > len(task_lists)):
             return None
 
-        for task in task_lists:
-            if(task.get('name', None) == tid):
-                return task
+        return task_lists[tid]
 
 
     def get_test_cases(self, tid):

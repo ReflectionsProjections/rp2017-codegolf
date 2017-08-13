@@ -22,10 +22,11 @@ class AnswerResource(Resource):
         data = request.get_data()
 
         # verify response using same input
+        result = docker_verify(data, args.language, test_cases)
         answer = Answer(
             username=args.username,
             length=len(data),
-            correct=docker_verify(data, args.language, test_cases),
+            correct=all(result),
             task_id=task_id
         )
         db.session.add(answer)
@@ -68,5 +69,4 @@ class TaskInfoResource(Resource):
 class TaskListResource(Resource):
     def get(self):
         '''Endpoint for getting a list of all available tasks'''
-        logging.error(manager)
         return jsonify(manager.get_tasks())
