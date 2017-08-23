@@ -1,0 +1,431 @@
+{
+	"variables": [],
+	"info": {
+		"name": "CodeGolf",
+		"_postman_id": "3e09827a-2626-51e1-2871-1fa6cca42501",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "answer_py_correct",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=py",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "py",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "import sys\nif __name__ == \"__main__\":\n  i = int(sys.argv[1])\n  print(int(i*(i+1)/2))"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_py_incorrect",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=py",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "py",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "print(0)"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_cc_correct",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=cc",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "cc",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "#include <cstdio>\n#include <cstdlib>\nint main(int argc,char** argv){\nint i=atoi(argv[1]);\nprintf(\"%d\\n\",i*(i+1)/2);\nreturn 0;\n}"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_cc_incorrect",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=cc",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "cc",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "#include <cstdio>\nint main(int argc,char** argv){\nprintf(\"0\\n\");\nreturn 0;\n}"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_cc_no_compile",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=cc",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "cc",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "#include <cstdio>\nint main(int argc,char** argv){\npriftn(\"0\\n\");\nreturn 0;\n}"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_js_correct",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=js",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "js",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "i=parseInt(process.argv[2])\nconsole.log(i*(i+1)/2)"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_js_incorrect",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=js",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "js",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "console.log(0)"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_unsupported_lang",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=pseudocode",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "pseudocode",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "console.log(0)"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_no_task",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/2/answer?username=USER&language=js",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"2",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "js",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "console.log(0)"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "Post Task",
+			"request": {
+				"url": "192.168.99.1:21337/golf/task?name=Heckerrenk&desc_link=desc/Heckerrenk.md&test_link=test/Heckerrenk.py&answer_link=answer/Heckerrenk.py",
+				"method": "POST",
+				"header": [],
+				"body": {},
+				"description": "Add task"
+			},
+			"response": []
+		},
+		{
+			"name": "Query Answer",
+			"request": {
+				"url": "192.168.99.1:21337/golf/1/answer_info",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Query Task",
+			"request": {
+				"url": "192.168.99.1:21337/golf/1/task_info?order=shortest",
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

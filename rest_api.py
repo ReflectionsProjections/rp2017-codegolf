@@ -16,13 +16,15 @@ class AnswerResource(Resource):
         parser.add_argument('language', location='args', required=True)
         args = parser.parse_args()
         test_cases = manager.get_test_cases(task_id)
-        if task_id is None:  # no task exists with the stated id
+        if task_id is None or test_cases is None:  # no task exists with the stated id
             return make_response("Tried to respond to an invalid task.", 400)
         # get body of response
         data = request.get_data()
 
         # verify response using same input
         result = docker_verify(data, args.language, test_cases)
+	if result is None:
+	    return make_response("Language is not supported.", 400)
         answer = Answer(
             username=args.username,
             length=len(data),
