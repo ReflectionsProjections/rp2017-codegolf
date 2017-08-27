@@ -223,6 +223,135 @@
 			"response": []
 		},
 		{
+			"name": "answer_java_correct",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=java",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "java",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "public class Answer {\n  public static void main(String[] args) {\n    int i=Integer.parseInt(args[0]);\n    System.out.println(i*(i+1)/2);\n  }\n}"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_java_incorrect",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=java",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "java",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "public class Answer {\n  public static void main(String[] args) {\n    int i=Integer.parseInt(args[0]);\n    System.out.println(i*(i+2)/2);\n  }\n}"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
+			"name": "answer_java_no_main",
+			"request": {
+				"url": {
+					"raw": "192.168.99.1:21337/golf/0/answer?username=USER&language=java",
+					"host": [
+						"192",
+						"168",
+						"99",
+						"1"
+					],
+					"port": "21337",
+					"path": [
+						"golf",
+						"0",
+						"answer"
+					],
+					"query": [
+						{
+							"key": "username",
+							"value": "USER",
+							"equals": true,
+							"description": ""
+						},
+						{
+							"key": "language",
+							"value": "java",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "public class Answer {\n  public static void NOMAIN(String[] args) {\n    int i=Integer.parseInt(args[0]);\n    System.out.println(i*(i+2)/2);\n  }\n}"
+				},
+				"description": "Send answer"
+			},
+			"response": []
+		},
+		{
 			"name": "answer_js_correct",
 			"request": {
 				"url": {
