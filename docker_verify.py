@@ -96,4 +96,22 @@ def __js_verify(answer, cases):
 
 
 def __java_verify(answer, cases):
-    return True
+    sp = Popen('docker run -id java bash', stdout=PIPE)
+    cid_bytes, _ = sp.communicate()
+    cid = cid_bytes.decode()[:-1]
+    results = [False] * len(cases)
+    with open('Answer.java', 'w') as tempfile:
+        tempfile.write(answer.decode())
+    call('docker cp Answer.java %s:usr/src/Answer.java' % cid)
+    call('rm Answer.java')
+    call('docker exec %s javac usr/src/Answer.java' % cid)
+    for i in range(len(cases)):
+        args = ' '.join(cases[i].get('input', None))
+        sp = Popen('docker exec -i %s java -cp usr/src Answer %s' % (cid, args), stdout=PIPE)
+        res_bytes, _ = sp.communicate()
+        res = res_bytes.decode()[:-1]
+	logging.warning(res + " == " + cases[i].get('output', None))
+        results[i] = (res == cases[i].get('output', None)) 
+    call('docker kill %s' % cid)
+    return results
+
