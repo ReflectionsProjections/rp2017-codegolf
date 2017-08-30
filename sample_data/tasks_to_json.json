@@ -36,6 +36,108 @@
                         "output": "false"
                     }
                 ]
+            },
+            {
+                "name": "Binary Palindromes",
+                "desc": "Given a signed 32-bit int N in base 10, return whether N is a palindrome in base 2.",
+                "test_cases": [
+                    {
+                        "input": [
+                            "0"
+                        ],
+                        "output": "true"
+                    },
+                    {
+                        "input": [
+                            "5"
+                        ],
+                        "output": "false"
+                    },
+                    {
+                        "input": [
+                            "1073741826"
+                        ],
+                        "output": "true"
+                    }
+                ]
+            },
+            {
+                "name": "Sentence Palindromes",
+                "desc": "Given a string S, return whether S is a palindrome ignoring non-alphanumeric characters and case.",
+                "test_cases": [
+                    {
+                        "input": [
+                            ""
+                        ],
+                        "output": "true"
+                    },
+                    {
+                        "input": [
+                            "A man, a plan, a canal, Panama!"
+                        ],
+                        "output": "true"
+                    },
+                    {
+                        "input": [
+                            "Not a palindrome."
+                        ],
+                        "output": "false"
+                    }
+                ]
+            },
+            {
+                "name": "Longest Palindrome Substring",
+                "desc": "Given an ASCII lowercase string S, return the longest substring of S such that is also a palindrome. Assume there's always exactly one longest palindrome substring.",
+                "test_cases": [
+                    {
+                        "input": [
+                            ""
+                        ],
+                        "output": ""
+                    },
+                    {
+                        "input": [
+                            "abba"
+                        ],
+                        "output": "abba"
+                    },
+                    {
+                        "input": [
+                            "abbaaa"
+                        ],
+                        "output": "abba"
+                    },
+                    {
+                        "input": [
+                            "abbaaaaaaaaaa"
+                        ],
+                        "output": "aaaaaaaaaa"
+                    }
+                ]
+            },
+            {
+                "name": "Scrabble Score",
+                "desc": "Given an ASCII lowercase string, return its English Scrabble score. For the Scrabble score reference, go to https://en.wikipedia.org/wiki/Scrabble_letter_distributions#English)",
+                "test_cases": [
+                    {
+                        "input": [
+                            ""
+                        ],
+                        "output": "0"
+                    },
+                    {
+                        "input": [
+                            "computer"
+                        ],
+                        "output": "14"
+                    },
+                    {
+                        "input": [
+                            "thequickbrownfoxjumpsoverthelazydog"
+                        ],
+                        "output": "99"
+                    }
+                ]
             }
         ]
     }
