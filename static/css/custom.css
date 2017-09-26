@@ -1,0 +1,69 @@
+html {
+    height: 100%;
+}
+
+body {
+    height: 100%;
+}
+
+/* Set height of the grid so .sidenav can be 100% (adjust if needed) */
+.row.content {
+    height: 100%;
+    width: 100%;
+}
+
+/* Set gray background color and 100% height */
+.sidenav {
+    background-color: #f1f1f1;
+    height: 100%;
+    margin-bottom: 0px;
+    padding-left: 5%;
+}
+
+.layout-content {
+    height: 100%;
+}
+
+/* Set black background color, white text and some padding */
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0px;
+    background-color: #555;
+    color: white;
+    padding: 15px;
+    margin-bottom: 0px;
+}
+
+/* On small screens, set height to 'auto' for sidenav and grid */
+@media screen and (max-width: 767px) {
+.sidenav {
+    height: auto;
+    padding: 15px;
+}
+.row.content {height: auto;} 
+}
+
+#repl {
+    tab-size: 4;
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+}
+
+.task-prompt {
+    max-height: 50%;
+    overflow: auto;
+}
+
+.task-pill {
+    margin: 5px;
+    padding: 5px;
+}
+
+.task-pill:hover {
+    background-color: #e1e1e1;
+}
+
+body{
+    font-family: Courier;
+}
