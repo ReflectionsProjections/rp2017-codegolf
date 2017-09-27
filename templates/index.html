@@ -23,21 +23,22 @@
       <h4 ng-if="username">{{username}}</h4>
       <form ng-if="!username" action="/golf/login" method="POST">
         <h4><small>EMAIL ADDRESS</small></h4>
-        <input type="text" name="email" placeholder="me@illinois.edu"/>
+        <input type="text" name="email" placeholder="me@illinois.edu" required>
         <h4><small>PASSWORD</small></h4>
-        <input type="password" name="password"/>
+        <input type="password" name="password" required>
         </br>
         <button class="btn btn-primary" type="submit">Log In</button>
       </form>
+      <hr>
       <form ng-if="!username" action="/golf/signup" method="POST">
         <h4><small>USERNAME</small></h4>
-        <input type="text" name="username" placeholder="Scotty">
+        <input type="text" name="username" placeholder="Scotty" required>
         <h4><small>EMAIL ADDRESS</small></h4>
-        <input type="text" name="email" placeholder="me@illinois.edu"/>
+        <input type="text" name="email" placeholder="me@illinois.edu" required>
         <h4><small>PASSWORD</small></h4>
-        <input type="password" name="password"/>
+        <input type="password" name="password" required>
         </br>
-        <button class="btn btn-primary" type="submit">Log In</button>
+        <button class="btn btn-primary" type="submit">Sign Up</button>
       </form>
       {% endraw %}
       <h4><small>LEADERBOARD</small></h4>

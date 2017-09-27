@@ -8,6 +8,7 @@ import os
 
 manager = None
 tokens = {}
+best_answer = None
 
 # Auth URL
 AUTH_URL = None
@@ -27,7 +28,7 @@ class AnswerResource(Resource):
         logging.error(session['token'])
         if 'token' not in session or session['token'] not in tokens:
             return make_response("Invalid token.", 400)
-        user_id = db.session.query(User).filter(User.email==tokens[session['token']]).first().id
+        user = db.session.query(User).filter(User.email==tokens[session['token']]).first()
 
         # get body of response
         data = request.get_data()
@@ -37,12 +38,15 @@ class AnswerResource(Resource):
 	if result is None:
 	    return make_response("Language is not supported.", 400)
         answer = Answer(
-            user_id=user_id,
+            user_id=user.id,
             task_id=task_id,
             length=len(data),
             correct=all(result),
         )
         db.session.add(answer)
+        if all(result):
+            if(len(data) < best_answer[task_id][args.language]):
+                best_answer[task_id][args.language] = len(data)
         db.session.commit()
         logging.info("%s submitted response to task id %s" %
                      (args.username, task_id))
@@ -106,6 +110,8 @@ class LoginResource(Resource):
         user = db.session.query(User).filter((User.email==args.email) & (User.password_hash==password_hash)).first()
         if user is None:
             return 'no account'
+
+        # allocate and maintain session token
         token = os.urandom(256).encode('hex')
         tokens[token] = args.email
         session['token'] = token
@@ -136,8 +142,10 @@ class SignupResource(Resource):
         )
         db.session.add(user_obj)
         db.session.commit()
+
+        # allocate and maintain session token
         token = os.urandom(256).encode('hex')
         tokens[token] = args.email
-        session['token'] = token;
+        session['token'] = token
         session['username'] = args.username
         return redirect('/')

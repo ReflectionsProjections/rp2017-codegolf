@@ -10,6 +10,7 @@ class Answer(db.Model):
     length = db.Column(db.Integer)
     correct = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, default=datetime.now, nullable=False)
+    points = db.Column(db.Integer)
 
     def to_dict(self):
         return {
@@ -18,7 +19,8 @@ class Answer(db.Model):
             'length': self.length,
             'correct': self.correct,
             'task_id': self.task_id,
-            'created_at': self.created_at
+            'created_at': self.created_at,
+            'points': self.points
         }
 
 class User(db.Model):

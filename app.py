@@ -15,6 +15,7 @@ logging.basicConfig(level=logging.INFO)
 
 # Configure port
 PORT = 21337
+CHALLENGES_PATH = 'data/challenges.json'
 
 api = Api(app)
 
@@ -66,6 +67,11 @@ db.init_app(app)
 db.create_all(app=app)
 
 if __name__ == '__main__':
-    rest_api.manager = TaskManager('sample_data/tasks_to_json.json')
+    rest_api.manager = TaskManager(CHALLENGES_PATH)
+    rest_api.best_answers = [{
+        'cc':float('inf'), 
+        'java':float('inf'), 
+        'js':float('inf'), 
+        'python':float('inf')} for _ in rest_api.manager.get_tasks()]
     logging.basicConfig(level="INFO")
     app.run(host='0.0.0.0', port=PORT, debug=True, threaded=True)
