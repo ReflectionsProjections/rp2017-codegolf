@@ -35,8 +35,8 @@ class AnswerResource(Resource):
 
         # verify response using same input
         result = docker_verify(data, args.language, test_cases)
-	if result is None:
-	    return make_response("Language is not supported.", 400)
+        if result is None:
+            return make_response("Language is not supported.", 400)
         answer = Answer(
             user_id=user.id,
             task_id=task_id,
@@ -105,14 +105,14 @@ class LoginResource(Resource):
         parser.add_argument('password', required=True)
         args = parser.parse_args()
         hash_obj = hashlib.sha256()
-        hash_obj.update(args.password)
+        hash_obj.update(args.password.encode('utf-8'))
         password_hash = hash_obj.hexdigest()
         user = db.session.query(User).filter((User.email==args.email) & (User.password_hash==password_hash)).first()
         if user is None:
             return 'no account'
 
         # allocate and maintain session token
-        token = os.urandom(256).encode('hex')
+        token = os.urandom(256)
         tokens[token] = args.email
         session['token'] = token
         session['username'] = user.username
@@ -134,7 +134,7 @@ class SignupResource(Resource):
             return redirect('/')
 
         hash_obj = hashlib.sha256()
-        hash_obj.update(args.password)
+        hash_obj.update(args.password.encode('utf-8'))
         user_obj = User(
             username=args.username,
             email=args.email,
@@ -144,7 +144,7 @@ class SignupResource(Resource):
         db.session.commit()
 
         # allocate and maintain session token
-        token = os.urandom(256).encode('hex')
+        token = os.urandom(256)
         tokens[token] = args.email
         session['token'] = token
         session['username'] = args.username

@@ -48,7 +48,7 @@ def __py_verify(answer, cases):
         sp = Popen('docker exec -i %s python usr/src/answer.py %s' % (cid, args), stdout=PIPE)
         res_bytes, _ = sp.communicate()
         res = res_bytes.decode()[:-1]
-	logging.warning(res + " == " + cases[i].get('output', None))
+        logging.warning(res + " == " + cases[i].get('output', None))
         results[i] = (res == cases[i].get('output', None)) 
     call('docker kill %s' % cid)
     return results
@@ -69,7 +69,7 @@ def __cc_verify(answer, cases):
         sp = Popen('docker exec -i %s usr/src/answer %s' % (cid, args), stdout=PIPE)
         res_bytes, _ = sp.communicate()
         res = res_bytes.decode()[:-1]
-	logging.warning(res + " == " + cases[i].get('output', None))
+        logging.warning(res + " == " + cases[i].get('output', None))
         results[i] = (res == cases[i].get('output', None)) 
     call('docker kill %s' % cid)
     return results
@@ -89,7 +89,7 @@ def __js_verify(answer, cases):
         sp = Popen('docker exec -i %s node usr/src/answer.js %s' % (cid, args), stdout=PIPE)
         res_bytes, _ = sp.communicate()
         res = res_bytes.decode()[:-1]
-	logging.warning(res + " == " + cases[i].get('output', None))
+        logging.warning(res + " == " + cases[i].get('output', None))
         results[i] = (res == cases[i].get('output', None)) 
     call('docker kill %s' % cid)
     return results
@@ -110,7 +110,7 @@ def __java_verify(answer, cases):
         sp = Popen('docker exec -i %s java -cp usr/src Answer %s' % (cid, args), stdout=PIPE)
         res_bytes, _ = sp.communicate()
         res = res_bytes.decode()[:-1]
-	logging.warning(res + " == " + cases[i].get('output', None))
+        logging.warning(res + " == " + cases[i].get('output', None))
         results[i] = (res == cases[i].get('output', None)) 
     call('docker kill %s' % cid)
     return results
