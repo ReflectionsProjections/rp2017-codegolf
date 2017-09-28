@@ -12,6 +12,7 @@
   <script>
     var task_id = {{task_id}};
     var username = "{{username}}";
+    var leaderboard = {{leaderboard|safe}};
   </script>
 </head>
 <body>
@@ -43,7 +44,14 @@
       {% endraw %}
       <h4><small>LEADERBOARD</small></h4>
       <hr>
-      {{leaderboard}}
+      {% raw %}
+      <table>
+        <tr ng-repeat="user in leaderboard">
+          <td><b>{{user.username}}</b></td>
+          <td><span class="user-pts">{{user.points}}</span></td>
+        </tr>
+      </table> 
+      {% endraw %}
       <h4><small>CHALLENGE</small></h4>
       <div ng-if="task_id!=null">
         <div class="task-prompt">

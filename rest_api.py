@@ -20,37 +20,41 @@ class AnswerResource(Resource):
         ''' Endpoint for submitting code '''
         parser = reqparse.RequestParser()
         parser.add_argument('language', required=True)
+        parser.add_argument('code', required=True)
         args = parser.parse_args()
         test_cases = manager.get_test_cases(task_id)
         if task_id is None or test_cases is None:  # no task exists with the stated id
             return make_response("Tried to respond to an invalid task.", 400)
         # get user id
-        logging.error(session['token'])
         if 'token' not in session or session['token'] not in tokens:
             return make_response("Invalid token.", 400)
         user = db.session.query(User).filter(User.email==tokens[session['token']]).first()
 
-        # get body of response
-        data = request.get_data()
-
         # verify response using same input
-        result = docker_verify(data, args.language, test_cases)
+        result = docker_verify(args.code, args.language, test_cases)
         if result is None:
             return make_response("Language is not supported.", 400)
-        answer = Answer(
-            user_id=user.id,
-            task_id=task_id,
-            length=len(data),
-            correct=all(result),
-        )
-        db.session.add(answer)
         if all(result):
-            if(len(data) < best_answer[task_id][args.language]):
-                best_answer[task_id][args.language] = len(data)
-        db.session.commit()
-        logging.info("%s submitted response to task id %s" %
-                     (args.username, task_id))
-        return jsonify(answer.to_dict())
+            if(len(args.code) < best_answer[task_id][args.language]):
+                best_answer[task_id][args.language] = len(args.code)
+            points = len(args.code)/best_answer[task_id][args.language]
+
+            # look for better answer from same user
+            prev_answer = db.session.query(Answer).filter((Answer.user_id==user.id) & (Answer.task_id==task_id) & (Answer.points>points)).first()
+            if prev_answer is None:
+                answer = Answer(
+                    user_id=user.id,
+                    task_id=task_id,
+                    length=len(args.code),
+                    points=points,
+                    language=args.language
+                )
+                db.session.add(answer)
+                user.points = sum([answer.points for answer in user.answers])
+                logging.error("%s now has %d points." % (user.username, user.points))
+                db.session.commit()
+        logging.info("%s submitted response to task id %s:\n\tCorrect? %d\tLength: %d\tBest: %d" % (user.username, task_id, all(result), len(args.code), best_answer[task_id][args.language]))
+        return redirect('/')
 
 
 class AnswerInfoResource(Resource):

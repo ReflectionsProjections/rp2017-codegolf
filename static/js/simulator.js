@@ -18,6 +18,7 @@ app.controller('codeGolfCtrl', function($scope, $http) {
         $scope.username = username;
     }
     $scope.task_id = task_id;
+    $scope.leaderboard = leaderboard;
     if(!task_id){
         $http({
             method: 'GET',

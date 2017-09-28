@@ -2,10 +2,11 @@
 
 import logging
 import rest_api
-from flask import Flask, render_template, request, redirect, session
+from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_restful import Api
-from models import db
+from models import db, User
 from task_manager import TaskManager
+import json
 
 app = Flask(__name__)
 app.secret_key = 'secretkey'
@@ -55,11 +56,14 @@ def home():
     if 'username' in session:
         username = session['username']
     else: username = 'null'
+    leaders = User.query.filter(User.points>0).order_by(User.points.desc()).limit(8)
+    leaderboard = json.dumps([user.to_dict() for user in leaders])
     return render_template('index.html', 
                            code=code,
                            task_title=task_title,
                            task_text=task_text,
                            task_id=task,
+                           leaderboard=leaderboard,
                            username=username)
 
 db.app = app
@@ -68,10 +72,10 @@ db.create_all(app=app)
 
 if __name__ == '__main__':
     rest_api.manager = TaskManager(CHALLENGES_PATH)
-    rest_api.best_answers = [{
+    rest_api.best_answer = [{
         'cc':float('inf'), 
         'java':float('inf'), 
         'js':float('inf'), 
-        'python':float('inf')} for _ in rest_api.manager.get_tasks()]
+        'py':float('inf')} for _ in rest_api.manager.get_tasks()]
     logging.basicConfig(level="INFO")
     app.run(host='0.0.0.0', port=PORT, debug=True, threaded=True)
