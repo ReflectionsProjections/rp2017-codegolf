@@ -30,11 +30,20 @@ class AnswerResource(Resource):
         args = parser.parse_args()
         task = manager.get_task(task_id)
         if task_id is None or task is None:  # no task exists with the stated id
-            return redirect('/?task=%d&message=%s' % (task_id, 'task does not exist.'))
+            return redirect('/?message=%s' % 'task does not exist.')
         test_cases = task.get('test_cases', None)
         # get user id
-        if 'token' not in session or session['token'] not in tokens:
-            return redirect('/?task=%d&message=%s' % (task_id, 'invalid token supplied.'))
+        if 'token' not in session:
+            try:
+                session.pop('username')
+            except KeyError: pass
+            return redirect('/?message=%s' % 'no auth token supplied.')
+        if session['token'] not in tokens:
+            try:
+                session.pop('username')
+            except KeyError: pass
+            session.pop('token')
+            return redirect('/?message=%s' % 'invalid token supplied.')
         user = db.session.query(User).filter(User.email==tokens[session['token']]).first()
 
         # verify response using same input
@@ -60,7 +69,8 @@ class AnswerResource(Resource):
                 db.session.add(answer)
                 user.points = sum([answer.points for answer in user.answers])
                 db.session.commit()
-        return redirect('/')
+            return redirect('/?task=%d&message=%s' % (task_id, 'answer judged correct.'))
+        return redirect('/?task=%d&message=%s' % (task_id, 'answer judged incorrect.'))
 
 
 class AnswerInfoResource(Resource):
@@ -103,7 +113,9 @@ class TaskListResource(Resource):
         retval = []
         for task in tasks:
             retval.append({'name':task['name'],
-                           'desc':task['desc']})
+                           'desc':task['desc'],
+                           'points': task['points'],
+                           'difficulty': task['difficulty']})
         return jsonify(retval)
 
 

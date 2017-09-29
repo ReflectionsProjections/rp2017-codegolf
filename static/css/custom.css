@@ -71,7 +71,6 @@ body {
 table {
     width: 100%;
     max-height: 20%;
-    height: 20%;
     overflow: auto; 
 }
 

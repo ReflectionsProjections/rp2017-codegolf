@@ -66,8 +66,8 @@
             {% raw %}
             <div ng-repeat="task in tasks track by $index" class="task-pill">
                 <a href="/?task={{$index}}">{{task['name']}}</a><br>
-                <span class="label label-default">New</span>
-                <span class="label label-success">Easy</span>
+                <span class="label label-default">{{task['difficulty']}}</span>
+                <span class="label label-default">{{task['points']}}</span>
                 <br>
             </div>
             {% endraw%}
@@ -89,17 +89,37 @@
           <textarea class="form-control" id="repl" rows="27" name="code">{{code}}</textarea>
         </div>
         <hr>
-	<select name="language" class="btn btn-default">
+	<select name="language" class="btn btn-default col-sm-6" id="language">
 	  <option value="cc">C++</option>
 	  <option value="java">Java</option>
 	  <option value="js">Javascript</option>
 	  <option value="py">Python</option>
 	</select>
-        <button class="btn btn-default col-sm-4" type="submit" ng-disabled="task_id==null">Verify</button>
+        <button class="btn btn-default col-sm-6" type="submit" ng-disabled="task_id==null">Verify</button>
       </form>
-      <br>
-      <p class="log-message">{{message}}</p>
+      <button class="btn btn-default col-sm-12" onclick="setBoilerplate()" ng-disabled="task_id==null">Boilerplate</button>
+      <br><br>
+      <center><p class="log-message">{{message}}</p></center>
       <script src="{{url_for('static', filename='js/simulator.js')}}"/></script>
+      <script>
+        function setBoilerplate(){
+            language = document.getElementById('language').value;
+            switch(language) {
+                case 'cc':
+                    document.getElementById('repl').value='#include <stdlib.h>\n#include <stdio.h>\nint main(int argc, char *argv[]){\n\tint i=atoi(argv[1]);\n\tprintf("%d",i);\n\treturn 0;\n}';
+                    break;
+                case 'java':
+                    document.getElementById('repl').value='public class Answer{\n\tpublic static void main(String[] args){\n\t\tint i=Integer.parseInt(args[0]);\n\t\tSystem.out.println(i);\n\t}\n}';
+                    break;
+                case 'js':
+                    document.getElementById('repl').value='i=parseInt(process.argv[2])\nconsole.log(i)';
+                    break;
+                case 'py':
+                    document.getElementById('repl').value='import sys\n\ti=int(sys.argv[1])\n\tprint(i)';
+                    break;
+            } 
+        }
+      </script>
       <hr>
       </br>
     </div>
