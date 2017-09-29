@@ -1,4 +1,5 @@
 from subprocess import call, Popen, PIPE
+import os
 import logging
 
 # wrapper function for all verification routines
