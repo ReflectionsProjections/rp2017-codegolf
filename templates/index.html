@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>R|P Code Golf</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"/>
+  <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='css/custom.css')}}"/>
+  <script>
+    var task_id = {{task_id}};
+    var username = "{{username}}";
+    var leaderboard = {{leaderboard|safe}};
+  </script>
+</head>
+<body>
+
+  <div class="row content" ng-app="codeGolfApp" ng-controller="codeGolfCtrl">
+    <div class="col-sm-3 sidenav">
+      <h3><b>Code Golf</b></h3>
+      {% raw %}
+      <h4 ng-if="username">{{username}}</h4>
+      <form ng-if="!username" action="/golf/login" method="POST">
+        <h4><small>EMAIL ADDRESS</small></h4>
+        <input type="text" name="email" placeholder="me@illinois.edu" required>
+        <h4><small>PASSWORD</small></h4>
+        <input type="password" name="password" required>
+        </br>
+        <button class="btn btn-primary" type="submit">Log In</button>
+      </form>
+      <hr>
+      <form ng-if="!username" action="/golf/signup" method="POST">
+        <h4><small>USERNAME</small></h4>
+        <input type="text" name="username" placeholder="Scotty" required>
+        <h4><small>EMAIL ADDRESS</small></h4>
+        <input type="text" name="email" placeholder="me@illinois.edu" required>
+        <h4><small>PASSWORD</small></h4>
+        <input type="password" name="password" required>
+        </br>
+        <button class="btn btn-primary" type="submit">Sign Up</button>
+      </form>
+      {% endraw %}
+      <h4><small>LEADERBOARD</small></h4>
+      <hr>
+      {% raw %}
+      <table>
+        <tr ng-repeat="user in leaderboard">
+          <td><b>{{user.username}}</b></td>
+          <td><span class="user-pts">{{user.points}}</span></td>
+        </tr>
+      </table> 
+      {% endraw %}
+      <div ng-if="task_id!=null">
+        <h4><small>CHALLENGE</small></h4>
+        <div class="task-prompt">
+          <h2>{{task_title}}</h2>
+          <span>Points: {{points}}<br>Difficulty: {{difficulty}}</span><br><br>
+          <p>{{task_text}}</p>
+        </div>
+        <br>
+        <button class="btn btn-danger" onclick="window.location.href='/'">Abandon</button>
+      </div>
+      <div ng-if="task_id==null && username">
+            {% raw %}
+            <div ng-repeat="task in tasks track by $index" class="task-pill">
+                <a href="/?task={{$index}}">{{task['name']}}</a><br>
+                <span class="label label-default">New</span>
+                <span class="label label-success">Easy</span>
+                <br>
+            </div>
+            {% endraw%}
+      </div>
+      <br><hr><br>
+      <div ng-if="task_id!=null">
+        <h4><small>EXAMPLE</small></h4>
+        <h5>Input</h5>
+        {{task_example['input']}}
+        <h5>Output</h5>
+        {{task_example['output']}}
+      </div>
+    </div>
+
+    <div class="col-sm-9">
+      <form role="form" action="/golf/{{task_id}}/answer" method="POST">
+        <h4><small>CODE</small></h4>
+        <div class="form-group">
+          <textarea class="form-control" id="repl" rows="27" name="code">{{code}}</textarea>
+        </div>
+        <hr>
+	<select name="language" class="btn btn-default">
+	  <option value="cc">C++</option>
+	  <option value="java">Java</option>
+	  <option value="js">Javascript</option>
+	  <option value="py">Python</option>
+	</select>
+        <button class="btn btn-default col-sm-4" type="submit" ng-disabled="task_id==null">Verify</button>
+      </form>
+      <br>
+      <p class="log-message">{{message}}</p>
+      <script src="{{url_for('static', filename='js/simulator.js')}}"/></script>
+      <hr>
+      </br>
+    </div>
+  </div>
+</body>
+</html>

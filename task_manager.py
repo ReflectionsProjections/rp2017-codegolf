@@ -44,7 +44,7 @@ class TaskManager:
             except:
                 raise json.decoder.JSONDecodeError('The data does not seem to be valid JSON')
         self.path = path
-        logging.info(self.data)
+        logging.info('\033[33mSuccessfully loaded challenges\033[0m')
 
 
     def get_raw_json(self):
