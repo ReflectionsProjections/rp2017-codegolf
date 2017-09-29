@@ -52,10 +52,11 @@
         </tr>
       </table> 
       {% endraw %}
-      <h4><small>CHALLENGE</small></h4>
       <div ng-if="task_id!=null">
+        <h4><small>CHALLENGE</small></h4>
         <div class="task-prompt">
           <h2>{{task_title}}</h2>
+          <span>Points: {{points}}<br>Difficulty: {{difficulty}}</span><br><br>
           <p>{{task_text}}</p>
         </div>
         <br>
@@ -72,16 +73,13 @@
             {% endraw%}
       </div>
       <br><hr><br>
-      <h4><small>PLAYERS</small></h4>
-      <div class="input-group">
-        <input type="text" class="form-control" placeholder="Find Player..">
-        <span class="input-group-btn">
-          <button class="btn btn-default" type="button">
-            <span class="glyphicon glyphicon-search"></span>
-          </button>
-        </span>
+      <div ng-if="task_id!=null">
+        <h4><small>EXAMPLE</small></h4>
+        <h5>Input</h5>
+        {{task_example['input']}}
+        <h5>Output</h5>
+        {{task_example['output']}}
       </div>
-      <h4><small>TEST CASES</small></h4>
     </div>
 
     <div class="col-sm-9">
@@ -99,6 +97,8 @@
 	</select>
         <button class="btn btn-default col-sm-4" type="submit" ng-disabled="task_id==null">Verify</button>
       </form>
+      <br>
+      <p class="log-message">{{message}}</p>
       <script src="{{url_for('static', filename='js/simulator.js')}}"/></script>
       <hr>
       </br>

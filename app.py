@@ -5,7 +5,6 @@ import rest_api
 from flask import Flask, render_template, request, redirect, session, jsonify
 from flask_restful import Api
 from models import db, User
-from task_manager import TaskManager
 import json
 
 app = Flask(__name__)
@@ -16,7 +15,6 @@ logging.basicConfig(level=logging.INFO)
 
 # Configure port
 PORT = 21337
-CHALLENGES_PATH = 'data/challenges.json'
 
 api = Api(app)
 
@@ -39,20 +37,35 @@ def home():
     if 'code' in request.args:
         code = request.args.get('code')
     else: code = ''
+    if 'message' in request.args:
+        message = request.args.get('message')
+    else: message = ''
     if task is not None:
         try:
             task_dict = rest_api.manager.get_task(task)
             task_title = task_dict['name']
             task_text = task_dict['desc']
+            task_example = {
+                'input':'arg: "'+'"\narg: "'.join(task_dict['test_cases'][0]['input'])+'"',
+                'output':'output: '+task_dict['test_cases'][0]['output']
+            }
+            points = task_dict['points']
+            difficulty = task_dict['difficulty']
         except TypeError:
-            logging.error("not valid task")	
-            task=None
+            logging.error("not valid task")
+            task='null'
             task_title = ''
             task_text = ''
+            task_example = {'input':[], 'output':''}
+            points = 0
+            difficulty='null'
     else:
         task_title = ''
         task_text = ''
         task = 'null'
+        task_example = {'input':[], 'output':''}
+        points = 0
+        difficulty='null'
     if 'username' in session:
         username = session['username']
     else: username = 'null'
@@ -62,20 +75,18 @@ def home():
                            code=code,
                            task_title=task_title,
                            task_text=task_text,
+                           task_example=task_example,
                            task_id=task,
                            leaderboard=leaderboard,
-                           username=username)
+                           username=username,
+                           points=points,
+                           difficulty=difficulty,
+                           message=message)
 
 db.app = app
 db.init_app(app)
 db.create_all(app=app)
 
 if __name__ == '__main__':
-    rest_api.manager = TaskManager(CHALLENGES_PATH)
-    rest_api.best_answer = [{
-        'cc':float('inf'), 
-        'java':float('inf'), 
-        'js':float('inf'), 
-        'py':float('inf')} for _ in rest_api.manager.get_tasks()]
     logging.basicConfig(level="INFO")
     app.run(host='0.0.0.0', port=PORT, debug=True, threaded=True)

@@ -38,9 +38,7 @@ def __py_verify(answer, cases):
         args = ' '.join(cases[i].get('input', None))
         sp = Popen(('docker exec -i %s python usr/src/answer.py %s' % (cid, args)).split(' '), stdout=PIPE)
         res_bytes, _ = sp.communicate()
-        logging.error(res_bytes)
         res = res_bytes.decode()[:-1]
-        logging.warning(res + " == " + cases[i].get('output', None))
         results[i] = (res == cases[i].get('output', None)) 
     call(('docker kill %s' % cid).split(' '))
     return results

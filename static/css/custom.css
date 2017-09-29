@@ -78,3 +78,7 @@ table {
 .user-pts {
     float: right;
 }
+
+.log-message {
+    color: green;
+}

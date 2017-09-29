@@ -4,6 +4,8 @@
             {
                 "name": "Triangle Numbers",
                 "desc": "Given an int N, return the Nth triangle number",
+                "difficulty": "easy",
+                "points": 20,
                 "test_cases": [
                     {
                         "input": [
@@ -22,6 +24,8 @@
             {
                 "name": "Perfect Numbers",
                 "desc": "Given an int N, return whether N is a perfect number",
+                "difficulty": "easy",
+                "points": 30,
                 "test_cases": [
                     {
                         "input": [
@@ -40,6 +44,8 @@
             {
                 "name": "Binary Palindromes",
                 "desc": "Given a signed 32-bit int N in base 10, return whether N is a palindrome in base 2.",
+                "difficulty": "easy",
+                "points": 20,
                 "test_cases": [
                     {
                         "input": [
@@ -64,6 +70,8 @@
             {
                 "name": "Sentence Palindromes",
                 "desc": "Given a string S, return whether S is a palindrome ignoring non-alphanumeric characters and case.",
+                "difficulty": "easy",
+                "points": 25,
                 "test_cases": [
                     {
                         "input": [
@@ -88,6 +96,8 @@
             {
                 "name": "Longest Palindrome Substring",
                 "desc": "Given an ASCII lowercase string S, return the longest substring of S such that is also a palindrome. Assume there's always exactly one longest palindrome substring.",
+                "difficulty": "medium",
+                "points": 40,
                 "test_cases": [
                     {
                         "input": [
@@ -118,6 +128,8 @@
             {
                 "name": "Scrabble Score",
                 "desc": "Given an ASCII lowercase string, return its English Scrabble score. For the Scrabble score reference, go to https://en.wikipedia.org/wiki/Scrabble_letter_distributions#English)",
+                "difficulty": "easy",
+                "points": 25,
                 "test_cases": [
                     {
                         "input": [
