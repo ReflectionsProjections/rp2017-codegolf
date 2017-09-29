@@ -9,6 +9,7 @@ textbox.onkeydown = function(e){
     }
 }
 
+
 // AngularJS controller
 var app = angular.module('codeGolfApp', []);
 app.controller('codeGolfCtrl', function($scope, $http) {
@@ -30,4 +31,22 @@ app.controller('codeGolfCtrl', function($scope, $http) {
             console.log('request failed');
         });
     }
+    $scope.setBoilerplate = function(){
+        language = document.getElementById('language').value;
+        switch(language) {
+            case 'cc':
+                document.getElementById('repl').value='#include <stdlib.h>\n#include <stdio.h>\nint main(int argc, char *argv[]){\n\tint i=atoi(argv[1]);\n\tprintf("%d",i);\n\treturn 0;\n}';
+                break;
+            case 'java':
+                document.getElementById('repl').value='public class Answer{\n\tpublic static void main(String[] args){\n\t\tint i=Integer.parseInt(args[0]);\n\t\tSystem.out.println(i);\n\t}\n}';
+                break;
+            case 'js':
+                document.getElementById('repl').value='i=parseInt(process.argv[2])\nconsole.log(i)';
+                break;
+            case 'py':
+                document.getElementById('repl').value='import sys\n\ti=int(sys.argv[1])\n\tprint(i)';
+                break;
+        } 
+    };
+    console.log($scope.setBoilerplate);
 });
